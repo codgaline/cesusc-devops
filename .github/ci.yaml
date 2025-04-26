@@ -1,0 +1,34 @@
+# Este é um workflow básico para integração contínua usando GitHub Actions
+
+name: Node.js CI
+
+# Define quando o workflow será executado
+on:
+  # Executa automaticamente quando houver push na branch develop
+  push:
+    branches: [ "develop" ]
+
+  # Permite execução manual na aba Actions do GitHub
+  workflow_dispatch:
+
+# Define os jobs (tarefas) do workflow
+jobs:
+  build:  # Nome do job
+    runs-on: ubuntu-latest  # Runner do GitHub (máquina Linux)
+
+    steps:
+      # Passo 1: Fazer checkout do repositório
+      - uses: actions/checkout@v4
+
+      # Passo 2: Configurar Node.js
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '20'
+
+      # Passo 3: Instalar dependências do projeto
+      - name: Install dependencies
+        run: npm install
+
+      # Passo 4: Rodar testes com Jest
+      - name: Run tests
+        run: npm test
